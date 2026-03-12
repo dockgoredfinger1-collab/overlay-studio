@@ -13,7 +13,9 @@ document.getElementById("generateBtn").onclick=function(){
 
 let data=encodeURIComponent(JSON.stringify(widgets))
 
-let url=location.origin+"/overlay.html?data="+data
+let base = window.location.origin + window.location.pathname.replace("index.html","")
+let url = base + "overlay.html?data=" + data
+
 
 document.getElementById("result").innerHTML=
 "<a target='_blank' href='"+url+"'>"+url+"</a>"
