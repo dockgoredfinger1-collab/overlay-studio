@@ -3,7 +3,6 @@ let widgets = []
 function addSaweria(){
 
 let key = document.getElementById("saweriaKey").value
-
 if(!key) return
 
 let src = "https://saweria.co/widgets/alert?streamKey=" + key
@@ -15,7 +14,6 @@ createWidget(src)
 function addWidget(){
 
 let url = document.getElementById("widgetURL").value
-
 if(!url) return
 
 createWidget(url)
@@ -32,12 +30,10 @@ div.style.top = "100px"
 div.style.width = "300px"
 div.style.height = "200px"
 
-/* drag handle */
 let handle = document.createElement("div")
 handle.className = "dragHandle"
 handle.innerText = "DRAG"
 
-/* iframe */
 let iframe = document.createElement("iframe")
 iframe.src = src
 
@@ -48,54 +44,68 @@ document.getElementById("preview").appendChild(div)
 
 enableDrag(div, handle)
 
-/* simpan data widget */
-let widgetData = {
+widgets.push({
 src:src,
 x:100,
 y:100,
 w:300,
 h:200
-}
-
-widgets.push(widgetData)
+})
 
 }
 
 function enableDrag(el, handle){
 
-let pos1=0,pos2=0,pos3=0,pos4=0
+let startX = 0
+let startY = 0
+let startLeft = 0
+let startTop = 0
 
-handle.onmousedown = dragMouseDown
+handle.addEventListener("mousedown", startDrag)
+handle.addEventListener("touchstart", startDrag)
 
-function dragMouseDown(e){
+function startDrag(e){
 
-e.preventDefault()
+if(e.type === "touchstart"){
+startX = e.touches[0].clientX
+startY = e.touches[0].clientY
+}else{
+startX = e.clientX
+startY = e.clientY
+}
 
-pos3=e.clientX
-pos4=e.clientY
+startLeft = el.offsetLeft
+startTop = el.offsetTop
 
-document.onmouseup=closeDrag
-document.onmousemove=elementDrag
+document.addEventListener("mousemove", drag)
+document.addEventListener("mouseup", stopDrag)
+
+document.addEventListener("touchmove", drag)
+document.addEventListener("touchend", stopDrag)
 
 }
 
-function elementDrag(e){
+function drag(e){
 
-e.preventDefault()
+let clientX
+let clientY
 
-pos1 = pos3 - e.clientX
-pos2 = pos4 - e.clientY
+if(e.type === "touchmove"){
+clientX = e.touches[0].clientX
+clientY = e.touches[0].clientY
+}else{
+clientX = e.clientX
+clientY = e.clientY
+}
 
-pos3 = e.clientX
-pos4 = e.clientY
+let dx = clientX - startX
+let dy = clientY - startY
 
-let newTop = el.offsetTop - pos2
-let newLeft = el.offsetLeft - pos1
+let newLeft = startLeft + dx
+let newTop = startTop + dy
 
-el.style.top = newTop + "px"
 el.style.left = newLeft + "px"
-
-/* update data widget */
+el.style.top = newTop + "px"
 
 let iframe = el.querySelector("iframe")
 let src = iframe.src
@@ -109,10 +119,13 @@ widget.y = newTop
 
 }
 
-function closeDrag(){
+function stopDrag(){
 
-document.onmouseup=null
-document.onmousemove=null
+document.removeEventListener("mousemove", drag)
+document.removeEventListener("mouseup", stopDrag)
+
+document.removeEventListener("touchmove", drag)
+document.removeEventListener("touchend", stopDrag)
 
 }
 
