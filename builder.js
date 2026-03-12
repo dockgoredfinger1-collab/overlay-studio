@@ -2,8 +2,17 @@ let widgets = []
 
 function addSaweria(){
 
-let key = document.getElementById("saweriaKey").value
-if(!key) return
+let input = document.getElementById("saweriaKey")
+if(!input){
+console.error("Input saweriaKey tidak ditemukan")
+return
+}
+
+let key = input.value.trim()
+if(!key){
+alert("Masukkan StreamKey Saweria dulu")
+return
+}
 
 let src = "https://saweria.co/widgets/alert?streamKey=" + key
 
@@ -13,8 +22,17 @@ createWidget(src)
 
 function addWidget(){
 
-let url = document.getElementById("widgetURL").value
-if(!url) return
+let input = document.getElementById("widgetURL")
+if(!input){
+console.error("Input widgetURL tidak ditemukan")
+return
+}
+
+let url = input.value.trim()
+if(!url){
+alert("Masukkan link widget dulu")
+return
+}
 
 createWidget(url)
 
@@ -22,9 +40,16 @@ createWidget(url)
 
 function createWidget(src){
 
-let div = document.createElement("div")
+let preview = document.getElementById("preview")
 
+if(!preview){
+console.error("Div preview tidak ditemukan")
+return
+}
+
+let div = document.createElement("div")
 div.className = "widget"
+
 div.style.left = "100px"
 div.style.top = "100px"
 div.style.width = "300px"
@@ -40,7 +65,7 @@ iframe.src = src
 div.appendChild(handle)
 div.appendChild(iframe)
 
-document.getElementById("preview").appendChild(div)
+preview.appendChild(div)
 
 enableDrag(div, handle)
 
@@ -51,6 +76,8 @@ y:100,
 w:300,
 h:200
 })
+
+console.log("Widget ditambahkan:", src)
 
 }
 
@@ -107,16 +134,6 @@ let newTop = startTop + dy
 el.style.left = newLeft + "px"
 el.style.top = newTop + "px"
 
-let iframe = el.querySelector("iframe")
-let src = iframe.src
-
-let widget = widgets.find(w => w.src === src)
-
-if(widget){
-widget.x = newLeft
-widget.y = newTop
-}
-
 }
 
 function stopDrag(){
@@ -133,11 +150,20 @@ document.removeEventListener("touchend", stopDrag)
 
 function generateOverlay(){
 
+if(widgets.length === 0){
+alert("Belum ada widget")
+return
+}
+
 let data = encodeURIComponent(JSON.stringify(widgets))
 
 let url = location.origin + "/overlay.html?data=" + data
 
-document.getElementById("result").innerHTML =
+let result = document.getElementById("result")
+
+if(result){
+result.innerHTML =
 "Link Overlay:<br><a target='_blank' href='"+url+"'>" + url + "</a>"
+}
 
 }
