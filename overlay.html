@@ -21,7 +21,7 @@ widgets.forEach(w=>{
 
 let iframe=document.createElement("iframe")
 
-iframe.src=w.src
+iframe.src=decodeURIComponent(w.src) 
 iframe.style.position="absolute"
 iframe.style.left=w.x+"px"
 iframe.style.top=w.y+"px"
