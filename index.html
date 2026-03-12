@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Overlay Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>Overlay Studio</h2>
+
+<div class="panel">
+
+<input id="saweria" placeholder="StreamKey Saweria">
+<button onclick="addSaweria()">Tambah Alert</button>
+
+<br><br>
+
+<input id="widgetlink" placeholder="Link iframe widget">
+<button onclick="addWidget()">Tambah Widget</button>
+
+<br><br>
+
+<button onclick="generate()">Generate Overlay Link</button>
+
+<p id="link"></p>
+
+</div>
+
+<div id="preview" class="preview"></div>
+
+<script src="builder.js"></script>
+
+</body>
+</html>
 
