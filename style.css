@@ -1,1 +1,30 @@
+body{
+font-family:sans-serif;
+background:#111;
+color:white;
+}
+
+.panel{
+margin-bottom:20px;
+}
+
+.preview{
+position:relative;
+width:960px;
+height:540px;
+background:#000;
+border:2px solid #444;
+}
+
+.widget{
+position:absolute;
+border:1px dashed white;
+cursor:move;
+}
+
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
 
