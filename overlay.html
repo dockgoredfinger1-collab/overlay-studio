@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<body style="margin:0;background:transparent">
+
+<div id="overlay" style="position:relative;width:1920px;height:1080px"></div>
+
+<script>
+
+let params=new URLSearchParams(location.search)
+
+let data=params.get("data")
+
+if(data){
+
+let widgets=JSON.parse(decodeURIComponent(data))
+
+widgets.forEach(w=>{
+
+let iframe=document.createElement("iframe")
+
+iframe.src=w.src
+iframe.style.position="absolute"
+iframe.style.left=w.x+"px"
+iframe.style.top=w.y+"px"
+iframe.style.width=w.w+"px"
+iframe.style.height=w.h+"px"
+iframe.style.border="none"
+
+document.getElementById("overlay").appendChild(iframe)
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
 
