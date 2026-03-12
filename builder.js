@@ -40,12 +40,13 @@ widget.appendChild(iframe)
 preview.appendChild(widget)
 
 let widgetData={
-src:src,
+src:encodeURIComponent(src),
 x:100,
 y:100,
 w:300,
 h:200
 }
+
 
 widgets.push(widgetData)
 
