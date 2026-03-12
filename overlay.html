@@ -15,6 +15,8 @@ if(data){
 
 let widgets=JSON.parse(decodeURIComponent(data))
 
+let overlay=document.getElementById("overlay")
+
 widgets.forEach(w=>{
 
 let iframe=document.createElement("iframe")
@@ -27,7 +29,7 @@ iframe.style.width=w.w+"px"
 iframe.style.height=w.h+"px"
 iframe.style.border="none"
 
-document.getElementById("overlay").appendChild(iframe)
+overlay.appendChild(iframe)
 
 })
 
@@ -37,4 +39,3 @@ document.getElementById("overlay").appendChild(iframe)
 
 </body>
 </html>
-
